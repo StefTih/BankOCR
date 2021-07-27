@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -8,8 +9,8 @@ public class Output {
     Processor processor;
     String accountNumbers;
 
-    Output() throws FileNotFoundException {
-
+    Output() throws IOException {
+        accountNumbers = "";
         mapping = new HashMap<>();
         loadMappings();
         processor = new Processor();
@@ -41,12 +42,20 @@ public class Output {
             {
                 accountNumber = accountNumber + mapping.get(line[0][i]+"\n"+line[1][i]+"\n"+line[2][i]);
             }
-            accountNumbers = accountNumbers + accountNumber + "\n";
+            if (accountNumber.contains("null"))
+            {
+                accountNumbers = accountNumbers + "This is a invalid account number" + "\n";
+            }
+            else
+            {
+                accountNumbers = accountNumbers + accountNumber + "\n";
+            }
+
         }
         return accountNumbers;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         Output output = new Output();
         System.out.println(output.getAccountNumbers());
     }

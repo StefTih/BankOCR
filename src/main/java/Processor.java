@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -13,7 +14,7 @@ public class Processor {
 
     private ArrayList<String[][]> arrayList;
 
-    Processor () throws FileNotFoundException {
+    Processor () throws IOException {
         parser = new Parser();
         arrayList = new ArrayList<>();
         file = parser.getFileValues();
@@ -21,7 +22,6 @@ public class Processor {
     }
 
     public ArrayList<String[][]> getArrayList() {
-        System.out.println(arrayList.size());
         return arrayList;
     }
 
@@ -32,7 +32,6 @@ public class Processor {
         {
             int size = 3;
             String[] strings = iterator.next().split("(?<=\\G.{"+size+"})");
-            System.out.println(Arrays.toString(strings));
             String[][] line = new String[NUM_LINES][NUM_CHARACTERS];
             int j = 0;
             int counter = 0;

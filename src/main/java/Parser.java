@@ -1,14 +1,16 @@
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+
+import java.io.*;
+
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Parser {
 
     private ArrayList<String> fileValues;
 
-    Parser () throws FileNotFoundException {
+    Parser () throws IOException {
         fileValues = new ArrayList<>();
         extractFile();
     }
@@ -18,32 +20,67 @@ public class Parser {
     }
 
 
-    public void extractFile() throws FileNotFoundException {
+    public void extractFile() throws IOException {
 
-        String values = "";
-        try (Scanner file = new Scanner(new File("C:\\Users\\Admin\\Desktop\\IntelijIDEA Projects\\BankOCR\\src\\main\\resources\\bank.txt")))
+
+        File file = new File("C:\\Users\\Admin\\Desktop\\IntelijIDEA Projects\\BankOCR\\src\\main\\resources\\bank.txt");
+        StringBuilder stringbuilder = new StringBuilder();
+        try(BufferedReader reader = new BufferedReader(new FileReader(file)))
         {
+            String line;
             int counter = 1;
-            while (file.hasNext())
+            while ((line = reader.readLine()) != null)
             {
-                if(counter > 4)
+                if(line.length()<27 && !line.equals(""))
                 {
-                    fileValues.add(values);
-                    values = file.nextLine();
-                    counter = 2;
+                    stringbuilder.append(line).append(" ");
                 }
                 else
                 {
-                    values = values + file.nextLine();
-                    counter+=1;
+                    stringbuilder.append(line);
                 }
 
+                counter+=1;
+                if (counter > 4)
+                {
+                    fileValues.add(stringbuilder.toString());
+                    stringbuilder.delete(0,stringbuilder.length());
+                    counter = 0;
+                }
             }
-            fileValues.add(values);
+            fileValues.add(stringbuilder.toString());
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
         }
+
     }
+
+//        String values = "";
+//        try (Scanner file = new Scanner(new File("C:\\Users\\Admin\\Desktop\\IntelijIDEA Projects\\BankOCR\\src\\main\\resources\\bank.txt")))
+//        {
+//            int counter = 1;
+//            while (file.hasNext())
+//            {
+//                if(counter > 4)
+//                {
+//                    fileValues.add(values);
+//                    values = file.nextLine();
+//                    counter = 2;
+//                }
+//                else
+//                {
+//                    values = values + file.nextLine();
+//                    counter+=1;
+//                }
+//
+//            }
+//            fileValues.add(values);
+//        }
+//        catch (Exception e)
+//        {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 }
