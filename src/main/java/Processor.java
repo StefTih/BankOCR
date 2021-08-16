@@ -1,7 +1,6 @@
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class Processor {
@@ -18,29 +17,24 @@ public class Processor {
         parser = new Parser();
         arrayList = new ArrayList<>();
         file = parser.getFileValues();
-
     }
 
     public ArrayList<String[][]> getArrayList() {
         return arrayList;
     }
 
-    public void convertFile()
-    {
+    public void convertFile() {
         Iterator<String> iterator = file.iterator();
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
             int size = 3;
             String[] strings = iterator.next().split("(?<=\\G.{"+size+"})");
             String[][] line = new String[NUM_LINES][NUM_CHARACTERS];
             int j = 0;
             int counter = 0;
-            for(int i = 0; i<strings.length; i++)
-            {
+            for(int i = 0; i<strings.length; i++) {
                 line[j][counter] = strings[i];
                 counter+=1;
-                if (counter>8)
-                {
+                if (counter>8) {
                     j += 1;
                     counter = 0;
                 }
